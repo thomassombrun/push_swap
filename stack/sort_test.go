@@ -195,3 +195,10 @@ func TestSortNombreDInstructions(t *testing.T) {
 		t.Logf("n=%d : moyenne de %d instructions", taille, total/essais)
 	}
 }
+
+func TestRanks(t *testing.T) {
+	got := ranks(Stack{4, 67, 3, 87, 23})
+	if want := (Stack{1, 3, 0, 4, 2}); !reflect.DeepEqual(got, want) {
+		t.Errorf("ranks = %v, attendu %v", got, want)
+	}
+}

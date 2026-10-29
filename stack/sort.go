@@ -21,6 +21,9 @@ func Sort(a Stack) []string {
 	if len(a) == 3 {
 		return sortThree(a)
 	}
+	if len(a) > 10 {
+		return radixSort(a)
+	}
 	return sortMany(a)
 }
 
@@ -114,4 +117,53 @@ func annule(a, b string) bool {
 		"rb": "rrb", "rrb": "rb",
 	}
 	return paires[a] == b
+}
+
+// La fonction ranks remplace chaque valeur par son rang (0 = le plus petit).
+func ranks(a Stack) Stack {
+	r := make(Stack, len(a))
+	for i, v := range a {
+		rank := 0
+		for _, w := range a {
+			if w < v {
+				rank++
+			}
+		}
+		r[i] = rank
+	}
+	return r
+}
+
+// radixSort renvoie les instructions qui trient a avec un tri radix sur les rangs.
+func radixSort(a Stack) []string {
+	st := State{A: ranks(a)}
+	n := len(a)
+	var moves []string
+
+	for bit := 0; (n-1)>>bit != 0; bit++ {
+		for i := 0; i < n; i++ {
+			move := "ra"
+			if (st.A[0]>>bit)&1 == 0 {
+				move = "pb"
+			}
+			st.Exec(move)
+			moves = addMove(moves, move)
+		}
+		for len(st.B) > 0 {
+			st.Exec("pa")
+			moves = addMove(moves, "pa")
+		}
+	}
+	return moves
+}
+
+// La fonction addMove ajoute m à la liste, sauf si m annule le dernier mouvement (pa/pb).
+func addMove(moves []string, m string) []string {
+	if n := len(moves); n > 0 {
+		last := moves[n-1]
+		if (m == "pa" && last == "pb") || (m == "pb" && last == "pa") {
+			return moves[:n-1]
+		}
+	}
+	return append(moves, m)
 }

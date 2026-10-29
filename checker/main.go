@@ -26,6 +26,7 @@ func main() {
 	st := stack.State{A: a}
 
 	scanner := bufio.NewScanner(os.Stdin)
+
 	for scanner.Scan() {
 		instr := scanner.Text()
 		if instr == "" {
