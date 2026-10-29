@@ -1,0 +1,16 @@
+# PUSH SWAP
+
+## Trier une pile avec le moins de coups possible
+-Trier la pile a par ordre croissant, avec le plus petit nombre au sommet, en utilisant uniquement une pile b et un jeu d'instruction limité.
+
+## Fonctonnalités
+-Calculer un liste d'instructions
+-Afficher la liste
+-Lire des instructions
+-Executer le résultat
+-Vérifier le résultat
+
+## Technologies
+-Go
+
+# Thomas SOMBRUN
